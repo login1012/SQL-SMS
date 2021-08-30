@@ -1,0 +1,328 @@
+﻿<?xml version="1.0" encoding="utf-16"?>
+<ShowPlanXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="1.6" Build="14.0.2027.2" xmlns="http://schemas.microsoft.com/sqlserver/2004/07/showplan">
+  <BatchSequence>
+    <Batch>
+      <Statements>
+        <StmtSimple StatementCompId="4" StatementEstRows="5.07042" StatementId="1" StatementOptmLevel="FULL" StatementOptmEarlyAbortReason="GoodEnoughPlanFound" CardinalityEstimationModelVersion="140" StatementSubTreeCost="0.172531" StatementText="select players.players, salary&#xD;&#xA;from cards inner join players on cards.players=players.id &#xD;&#xA;inner join contracts on players.id=contracts.players &#xD;&#xA;inner join salary on contracts.id=salary.contracts&#xD;&#xA;where players.id in (select players from&#xD;&#xA;(select top 3 players, count(players) k&#xD;&#xA;from cards group by players order by count(players)) x)" StatementType="SELECT" QueryHash="0xCCCCEB326CA716AE" QueryPlanHash="0x0F17F80E3EBCC624" RetrievedFromCache="true" SecurityPolicyApplied="false">
+          <StatementSetOptions ANSI_NULLS="true" ANSI_PADDING="true" ANSI_WARNINGS="true" ARITHABORT="true" CONCAT_NULL_YIELDS_NULL="true" NUMERIC_ROUNDABORT="false" QUOTED_IDENTIFIER="true" />
+          <QueryPlan DegreeOfParallelism="0" NonParallelPlanReason="NoParallelPlansInDesktopOrExpressEdition" MemoryGrant="2240" CachedPlanSize="104" CompileTime="56" CompileCPU="24" CompileMemory="904">
+            <MemoryGrantInfo SerialRequiredMemory="2048" SerialDesiredMemory="2240" RequiredMemory="2048" DesiredMemory="2240" RequestedMemory="2240" GrantWaitTime="0" GrantedMemory="2240" MaxUsedMemory="424" MaxQueryMemory="121960" />
+            <OptimizerHardwareDependentProperties EstimatedAvailableMemoryGrant="102667" EstimatedPagesCached="25666" EstimatedAvailableDegreeOfParallelism="2" MaxCompileMemory="426216" />
+            <OptimizerStatsUsage>
+              <StatisticsInfo Database="[Univer]" Schema="[dbo]" Table="[contracts]" Statistics="[_WA_Sys_00000002_6EC0713C]" ModificationCount="0" SamplingPercent="100" LastUpdate="2020-09-22T12:43:51.52" />
+              <StatisticsInfo Database="[Univer]" Schema="[dbo]" Table="[players]" Statistics="[PK_players]" ModificationCount="0" SamplingPercent="100" LastUpdate="2020-09-20T07:02:13.33" />
+              <StatisticsInfo Database="[Univer]" Schema="[dbo]" Table="[salary]" Statistics="[_WA_Sys_00000002_756D6ECB]" ModificationCount="0" SamplingPercent="100" LastUpdate="2020-11-30T03:36:25.58" />
+              <StatisticsInfo Database="[Univer]" Schema="[dbo]" Table="[contracts]" Statistics="[PK_contracts]" ModificationCount="0" SamplingPercent="100" LastUpdate="2020-09-20T07:13:10.55" />
+              <StatisticsInfo Database="[Univer]" Schema="[dbo]" Table="[cards]" Statistics="[_WA_Sys_00000002_1C873BEC]" ModificationCount="0" SamplingPercent="100" LastUpdate="2020-09-22T12:43:51.49" />
+            </OptimizerStatsUsage>
+            <TraceFlags IsCompileTime="true">
+              <TraceFlag Value="8017" Scope="Global" />
+            </TraceFlags>
+            <TraceFlags IsCompileTime="false">
+              <TraceFlag Value="8017" Scope="Global" />
+            </TraceFlags>
+            <WaitStats>
+              <Wait WaitType="PAGEIOLATCH_SH" WaitTimeMs="4" WaitCount="11" />
+            </WaitStats>
+            <QueryTimeStats CpuTime="5" ElapsedTime="9" />
+            <RelOp AvgRowSize="4043" EstimateCPU="0.0337376" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row" EstimateRows="5.07042" LogicalOp="Inner Join" NodeId="0" Parallel="false" PhysicalOp="Hash Match" EstimatedTotalSubtreeCost="0.172531">
+              <OutputList>
+                <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[players]" Column="players" />
+                <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[salary]" Column="salary" />
+              </OutputList>
+              <MemoryFractions Input="0.5" Output="1" />
+              <RunTimeInformation>
+                <RunTimeCountersPerThread Thread="0" ActualRows="3" Batches="0" ActualEndOfScans="1" ActualExecutions="1" ActualExecutionMode="Row" ActualElapsedms="8" ActualCPUms="4" ActualScans="0" ActualLogicalReads="0" ActualPhysicalReads="0" ActualReadAheads="0" ActualLobLogicalReads="0" ActualLobPhysicalReads="0" ActualLobReadAheads="0" InputMemoryGrant="1120" OutputMemoryGrant="1216" UsedMemoryGrant="248" />
+              </RunTimeInformation>
+              <Hash>
+                <DefinedValues />
+                <HashKeysBuild>
+                  <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[contracts]" Column="players" />
+                </HashKeysBuild>
+                <HashKeysProbe>
+                  <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[cards]" Column="players" />
+                </HashKeysProbe>
+                <ProbeResidual>
+                  <ScalarOperator ScalarString="[Univer].[dbo].[cards].[players]=[Univer].[dbo].[contracts].[players]">
+                    <Compare CompareOp="EQ">
+                      <ScalarOperator>
+                        <Identifier>
+                          <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[cards]" Column="players" />
+                        </Identifier>
+                      </ScalarOperator>
+                      <ScalarOperator>
+                        <Identifier>
+                          <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[contracts]" Column="players" />
+                        </Identifier>
+                      </ScalarOperator>
+                    </Compare>
+                  </ScalarOperator>
+                </ProbeResidual>
+                <RelOp AvgRowSize="4047" EstimateCPU="0.0281289" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row" EstimateRows="3" LogicalOp="Inner Join" NodeId="1" Parallel="false" PhysicalOp="Hash Match" EstimatedTotalSubtreeCost="0.131967">
+                  <OutputList>
+                    <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[players]" Column="players" />
+                    <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[contracts]" Column="players" />
+                    <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[salary]" Column="salary" />
+                  </OutputList>
+                  <MemoryFractions Input="0.666667" Output="0.5" />
+                  <RunTimeInformation>
+                    <RunTimeCountersPerThread Thread="0" ActualRows="3" Batches="0" ActualEndOfScans="1" ActualExecutions="1" ActualExecutionMode="Row" ActualElapsedms="8" ActualCPUms="4" ActualScans="0" ActualLogicalReads="0" ActualPhysicalReads="0" ActualReadAheads="0" ActualLobLogicalReads="0" ActualLobPhysicalReads="0" ActualLobReadAheads="0" InputMemoryGrant="1152" OutputMemoryGrant="1120" UsedMemoryGrant="176" />
+                  </RunTimeInformation>
+                  <Hash>
+                    <DefinedValues />
+                    <HashKeysBuild>
+                      <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[contracts]" Column="id" />
+                    </HashKeysBuild>
+                    <HashKeysProbe>
+                      <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[salary]" Column="contracts" />
+                    </HashKeysProbe>
+                    <RelOp AvgRowSize="4043" EstimateCPU="1.254E-05" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row" EstimateRows="3" LogicalOp="Inner Join" NodeId="3" Parallel="false" PhysicalOp="Nested Loops" EstimatedTotalSubtreeCost="0.0972041">
+                      <OutputList>
+                        <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[players]" Column="players" />
+                        <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[contracts]" Column="id" />
+                        <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[contracts]" Column="players" />
+                      </OutputList>
+                      <RunTimeInformation>
+                        <RunTimeCountersPerThread Thread="0" ActualRows="3" Batches="0" ActualEndOfScans="1" ActualExecutions="1" ActualExecutionMode="Row" ActualElapsedms="6" ActualCPUms="2" />
+                      </RunTimeInformation>
+                      <NestedLoops Optimized="false">
+                        <OuterReferences>
+                          <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[cards]" Column="players" />
+                        </OuterReferences>
+                        <RelOp AvgRowSize="19" EstimateCPU="0.0244876" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row" EstimateRows="3" LogicalOp="Inner Join" NodeId="4" Parallel="false" PhysicalOp="Hash Match" EstimatedTotalSubtreeCost="0.0906418">
+                          <OutputList>
+                            <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[contracts]" Column="id" />
+                            <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[contracts]" Column="players" />
+                            <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[cards]" Column="players" />
+                          </OutputList>
+                          <MemoryFractions Input="0.352941" Output="0.333333" />
+                          <RunTimeInformation>
+                            <RunTimeCountersPerThread Thread="0" ActualRows="3" Batches="0" ActualEndOfScans="1" ActualExecutions="1" ActualExecutionMode="Row" ActualElapsedms="4" ActualCPUms="2" ActualScans="0" ActualLogicalReads="0" ActualPhysicalReads="0" ActualReadAheads="0" ActualLobLogicalReads="0" ActualLobPhysicalReads="0" ActualLobReadAheads="0" InputMemoryGrant="1088" OutputMemoryGrant="1088" UsedMemoryGrant="248" />
+                          </RunTimeInformation>
+                          <Hash>
+                            <DefinedValues />
+                            <HashKeysBuild>
+                              <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[cards]" Column="players" />
+                            </HashKeysBuild>
+                            <HashKeysProbe>
+                              <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[contracts]" Column="players" />
+                            </HashKeysProbe>
+                            <ProbeResidual>
+                              <ScalarOperator ScalarString="[Univer].[dbo].[cards].[players]=[Univer].[dbo].[contracts].[players]">
+                                <Compare CompareOp="EQ">
+                                  <ScalarOperator>
+                                    <Identifier>
+                                      <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[cards]" Column="players" />
+                                    </Identifier>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Identifier>
+                                      <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[contracts]" Column="players" />
+                                    </Identifier>
+                                  </ScalarOperator>
+                                </Compare>
+                              </ScalarOperator>
+                            </ProbeResidual>
+                            <RelOp AvgRowSize="15" EstimateCPU="0.0105908" EstimateIO="0.0112613" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row" EstimateRows="3" LogicalOp="TopN Sort" NodeId="5" Parallel="false" PhysicalOp="Sort" EstimatedTotalSubtreeCost="0.0602609">
+                              <OutputList>
+                                <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[cards]" Column="players" />
+                                <ColumnReference Column="Expr1010" />
+                              </OutputList>
+                              <MemoryFractions Input="0.0588235" Output="0.647059" />
+                              <RunTimeInformation>
+                                <RunTimeCountersPerThread Thread="0" ActualRebinds="1" ActualRewinds="0" ActualRows="3" Batches="0" ActualEndOfScans="1" ActualExecutions="1" ActualExecutionMode="Row" ActualElapsedms="2" ActualCPUms="1" ActualScans="0" ActualLogicalReads="0" ActualPhysicalReads="0" ActualReadAheads="0" ActualLobLogicalReads="0" ActualLobPhysicalReads="0" ActualLobReadAheads="0" InputMemoryGrant="24" OutputMemoryGrant="24" UsedMemoryGrant="16" />
+                              </RunTimeInformation>
+                              <TopSort Distinct="false" Rows="3">
+                                <OrderBy>
+                                  <OrderByColumn Ascending="true">
+                                    <ColumnReference Column="Expr1010" />
+                                  </OrderByColumn>
+                                </OrderBy>
+                                <RelOp AvgRowSize="15" EstimateCPU="0" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row" EstimateRows="710" LogicalOp="Compute Scalar" NodeId="6" Parallel="false" PhysicalOp="Compute Scalar" EstimatedTotalSubtreeCost="0.0384088">
+                                  <OutputList>
+                                    <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[cards]" Column="players" />
+                                    <ColumnReference Column="Expr1010" />
+                                  </OutputList>
+                                  <ComputeScalar>
+                                    <DefinedValues>
+                                      <DefinedValue>
+                                        <ColumnReference Column="Expr1010" />
+                                        <ScalarOperator ScalarString="CONVERT_IMPLICIT(int,[Expr1013],0)">
+                                          <Convert DataType="int" Style="0" Implicit="true">
+                                            <ScalarOperator>
+                                              <Identifier>
+                                                <ColumnReference Column="Expr1013" />
+                                              </Identifier>
+                                            </ScalarOperator>
+                                          </Convert>
+                                        </ScalarOperator>
+                                      </DefinedValue>
+                                    </DefinedValues>
+                                    <RelOp AvgRowSize="15" EstimateCPU="0.001075" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row" EstimateRows="710" LogicalOp="Aggregate" NodeId="7" Parallel="false" PhysicalOp="Stream Aggregate" EstimatedTotalSubtreeCost="0.0384088">
+                                      <OutputList>
+                                        <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[cards]" Column="players" />
+                                        <ColumnReference Column="Expr1013" />
+                                      </OutputList>
+                                      <RunTimeInformation>
+                                        <RunTimeCountersPerThread Thread="0" ActualRows="710" Batches="0" ActualEndOfScans="1" ActualExecutions="1" ActualExecutionMode="Row" ActualElapsedms="2" ActualCPUms="1" />
+                                      </RunTimeInformation>
+                                      <StreamAggregate>
+                                        <DefinedValues>
+                                          <DefinedValue>
+                                            <ColumnReference Column="Expr1013" />
+                                            <ScalarOperator ScalarString="COUNT([Univer].[dbo].[cards].[players])">
+                                              <Aggregate AggType="COUNT_BIG" Distinct="false">
+                                                <ScalarOperator>
+                                                  <Identifier>
+                                                    <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[cards]" Column="players" />
+                                                  </Identifier>
+                                                </ScalarOperator>
+                                              </Aggregate>
+                                            </ScalarOperator>
+                                          </DefinedValue>
+                                        </DefinedValues>
+                                        <GroupBy>
+                                          <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[cards]" Column="players" />
+                                        </GroupBy>
+                                        <RelOp AvgRowSize="11" EstimateCPU="0.0192484" EstimateIO="0.0112613" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row" EstimateRows="1200" LogicalOp="Sort" NodeId="8" Parallel="false" PhysicalOp="Sort" EstimatedTotalSubtreeCost="0.0373338">
+                                          <OutputList>
+                                            <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[cards]" Column="players" />
+                                          </OutputList>
+                                          <MemoryFractions Input="1" Output="0.941176" />
+                                          <RunTimeInformation>
+                                            <RunTimeCountersPerThread Thread="0" ActualRebinds="1" ActualRewinds="0" ActualRows="1200" Batches="0" ActualEndOfScans="1" ActualExecutions="1" ActualExecutionMode="Row" ActualElapsedms="2" ActualCPUms="1" ActualScans="0" ActualLogicalReads="0" ActualPhysicalReads="0" ActualReadAheads="0" ActualLobLogicalReads="0" ActualLobPhysicalReads="0" ActualLobReadAheads="0" InputMemoryGrant="704" OutputMemoryGrant="304" UsedMemoryGrant="64" />
+                                          </RunTimeInformation>
+                                          <Sort Distinct="false">
+                                            <OrderBy>
+                                              <OrderByColumn Ascending="true">
+                                                <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[cards]" Column="players" />
+                                              </OrderByColumn>
+                                            </OrderBy>
+                                            <RelOp AvgRowSize="11" EstimateCPU="0.001477" EstimateIO="0.00534722" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row" EstimateRows="1200" EstimatedRowsRead="1200" LogicalOp="Clustered Index Scan" NodeId="9" Parallel="false" PhysicalOp="Clustered Index Scan" EstimatedTotalSubtreeCost="0.00682422" TableCardinality="1200">
+                                              <OutputList>
+                                                <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[cards]" Column="players" />
+                                              </OutputList>
+                                              <RunTimeInformation>
+                                                <RunTimeCountersPerThread Thread="0" ActualRows="1200" ActualRowsRead="1200" Batches="0" ActualEndOfScans="1" ActualExecutions="1" ActualExecutionMode="Row" ActualElapsedms="1" ActualCPUms="0" ActualScans="1" ActualLogicalReads="6" ActualPhysicalReads="1" ActualReadAheads="4" ActualLobLogicalReads="0" ActualLobPhysicalReads="0" ActualLobReadAheads="0" />
+                                              </RunTimeInformation>
+                                              <IndexScan Ordered="false" ForcedIndex="false" ForceScan="false" NoExpandHint="false" Storage="RowStore">
+                                                <DefinedValues>
+                                                  <DefinedValue>
+                                                    <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[cards]" Column="players" />
+                                                  </DefinedValue>
+                                                </DefinedValues>
+                                                <Object Database="[Univer]" Schema="[dbo]" Table="[cards]" Index="[PK_cards]" TableReferenceId="2" IndexKind="Clustered" Storage="RowStore" />
+                                              </IndexScan>
+                                            </RelOp>
+                                          </Sort>
+                                        </RelOp>
+                                      </StreamAggregate>
+                                    </RelOp>
+                                  </ComputeScalar>
+                                </RelOp>
+                              </TopSort>
+                            </RelOp>
+                            <RelOp AvgRowSize="15" EstimateCPU="0.0012834" EstimateIO="0.00460648" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row" EstimateRows="1024" EstimatedRowsRead="1024" LogicalOp="Clustered Index Scan" NodeId="10" Parallel="false" PhysicalOp="Clustered Index Scan" EstimatedTotalSubtreeCost="0.00588988" TableCardinality="1024">
+                              <OutputList>
+                                <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[contracts]" Column="id" />
+                                <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[contracts]" Column="players" />
+                              </OutputList>
+                              <RunTimeInformation>
+                                <RunTimeCountersPerThread Thread="0" ActualRows="1024" ActualRowsRead="1024" Batches="0" ActualEndOfScans="1" ActualExecutions="1" ActualExecutionMode="Row" ActualElapsedms="1" ActualCPUms="0" ActualScans="1" ActualLogicalReads="5" ActualPhysicalReads="1" ActualReadAheads="3" ActualLobLogicalReads="0" ActualLobPhysicalReads="0" ActualLobReadAheads="0" />
+                              </RunTimeInformation>
+                              <IndexScan Ordered="false" ForcedIndex="false" ForceScan="false" NoExpandHint="false" Storage="RowStore">
+                                <DefinedValues>
+                                  <DefinedValue>
+                                    <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[contracts]" Column="id" />
+                                  </DefinedValue>
+                                  <DefinedValue>
+                                    <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[contracts]" Column="players" />
+                                  </DefinedValue>
+                                </DefinedValues>
+                                <Object Database="[Univer]" Schema="[dbo]" Table="[contracts]" Index="[PK_contracts]" IndexKind="Clustered" Storage="RowStore" />
+                              </IndexScan>
+                            </RelOp>
+                          </Hash>
+                        </RelOp>
+                        <RelOp AvgRowSize="4035" EstimateCPU="0.0001581" EstimateIO="0.003125" EstimateRebinds="2" EstimateRewinds="4.67852E-10" EstimatedExecutionMode="Row" EstimateRows="1" EstimatedRowsRead="1" LogicalOp="Clustered Index Seek" NodeId="11" Parallel="false" PhysicalOp="Clustered Index Seek" EstimatedTotalSubtreeCost="0.00654978" TableCardinality="1024">
+                          <OutputList>
+                            <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[players]" Column="players" />
+                          </OutputList>
+                          <RunTimeInformation>
+                            <RunTimeCountersPerThread Thread="0" ActualRows="3" ActualRowsRead="3" Batches="0" ActualEndOfScans="0" ActualExecutions="3" ActualExecutionMode="Row" ActualElapsedms="2" ActualCPUms="0" ActualScans="0" ActualLogicalReads="6" ActualPhysicalReads="2" ActualReadAheads="0" ActualLobLogicalReads="0" ActualLobPhysicalReads="0" ActualLobReadAheads="0" />
+                          </RunTimeInformation>
+                          <IndexScan Ordered="true" ScanDirection="FORWARD" ForcedIndex="false" ForceSeek="false" ForceScan="false" NoExpandHint="false" Storage="RowStore">
+                            <DefinedValues>
+                              <DefinedValue>
+                                <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[players]" Column="players" />
+                              </DefinedValue>
+                            </DefinedValues>
+                            <Object Database="[Univer]" Schema="[dbo]" Table="[players]" Index="[PK_players]" IndexKind="Clustered" Storage="RowStore" />
+                            <SeekPredicates>
+                              <SeekPredicateNew>
+                                <SeekKeys>
+                                  <Prefix ScanType="EQ">
+                                    <RangeColumns>
+                                      <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[players]" Column="id" />
+                                    </RangeColumns>
+                                    <RangeExpressions>
+                                      <ScalarOperator ScalarString="[Univer].[dbo].[cards].[players]">
+                                        <Identifier>
+                                          <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[cards]" Column="players" />
+                                        </Identifier>
+                                      </ScalarOperator>
+                                    </RangeExpressions>
+                                  </Prefix>
+                                </SeekKeys>
+                              </SeekPredicateNew>
+                            </SeekPredicates>
+                          </IndexScan>
+                        </RelOp>
+                      </NestedLoops>
+                    </RelOp>
+                    <RelOp AvgRowSize="19" EstimateCPU="0.0012834" EstimateIO="0.00534722" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row" EstimateRows="1024" EstimatedRowsRead="1024" LogicalOp="Clustered Index Scan" NodeId="12" Parallel="false" PhysicalOp="Clustered Index Scan" EstimatedTotalSubtreeCost="0.00663062" TableCardinality="1024">
+                      <OutputList>
+                        <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[salary]" Column="contracts" />
+                        <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[salary]" Column="salary" />
+                      </OutputList>
+                      <RunTimeInformation>
+                        <RunTimeCountersPerThread Thread="0" ActualRows="1024" ActualRowsRead="1024" Batches="0" ActualEndOfScans="1" ActualExecutions="1" ActualExecutionMode="Row" ActualElapsedms="1" ActualCPUms="0" ActualScans="1" ActualLogicalReads="6" ActualPhysicalReads="1" ActualReadAheads="4" ActualLobLogicalReads="0" ActualLobPhysicalReads="0" ActualLobReadAheads="0" />
+                      </RunTimeInformation>
+                      <IndexScan Ordered="false" ForcedIndex="false" ForceScan="false" NoExpandHint="false" Storage="RowStore">
+                        <DefinedValues>
+                          <DefinedValue>
+                            <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[salary]" Column="contracts" />
+                          </DefinedValue>
+                          <DefinedValue>
+                            <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[salary]" Column="salary" />
+                          </DefinedValue>
+                        </DefinedValues>
+                        <Object Database="[Univer]" Schema="[dbo]" Table="[salary]" Index="[PK_salary]" IndexKind="Clustered" Storage="RowStore" />
+                      </IndexScan>
+                    </RelOp>
+                  </Hash>
+                </RelOp>
+                <RelOp AvgRowSize="11" EstimateCPU="0.001477" EstimateIO="0.00534722" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row" EstimateRows="1200" EstimatedRowsRead="1200" LogicalOp="Clustered Index Scan" NodeId="13" Parallel="false" PhysicalOp="Clustered Index Scan" EstimatedTotalSubtreeCost="0.00682422" TableCardinality="1200">
+                  <OutputList>
+                    <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[cards]" Column="players" />
+                  </OutputList>
+                  <RunTimeInformation>
+                    <RunTimeCountersPerThread Thread="0" ActualRows="1200" ActualRowsRead="1200" Batches="0" ActualEndOfScans="1" ActualExecutions="1" ActualExecutionMode="Row" ActualElapsedms="0" ActualCPUms="0" ActualScans="1" ActualLogicalReads="6" ActualPhysicalReads="0" ActualReadAheads="0" ActualLobLogicalReads="0" ActualLobPhysicalReads="0" ActualLobReadAheads="0" />
+                  </RunTimeInformation>
+                  <IndexScan Ordered="false" ForcedIndex="false" ForceScan="false" NoExpandHint="false" Storage="RowStore">
+                    <DefinedValues>
+                      <DefinedValue>
+                        <ColumnReference Database="[Univer]" Schema="[dbo]" Table="[cards]" Column="players" />
+                      </DefinedValue>
+                    </DefinedValues>
+                    <Object Database="[Univer]" Schema="[dbo]" Table="[cards]" Index="[PK_cards]" TableReferenceId="1" IndexKind="Clustered" Storage="RowStore" />
+                  </IndexScan>
+                </RelOp>
+              </Hash>
+            </RelOp>
+          </QueryPlan>
+        </StmtSimple>
+      </Statements>
+    </Batch>
+  </BatchSequence>
+</ShowPlanXML>
